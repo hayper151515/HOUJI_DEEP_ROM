@@ -249,11 +249,51 @@ for vendor_build_prop in $(sudo find "$GITHUB_WORKSPACE"/"${device}"/ -type f -n
   sudo sed -i 's/build.date.utc=[^*]*/build.date.utc='"${build_utc}"'/' "${vendor_build_prop}"
   sudo sed -i 's/ro.mi.os.version.incremental=[^*]*/ro.mi.os.version.incremental='"${port_os_version}"'/' "${vendor_build_prop}"
 done
-# 精简部分应用
-echo -e "${Red}- 精简部分应用"
-apps=("MIGalleryLockscreen" "MIUIDriveMode" "MIUIDuokanReader" "MIUIGameCenter" "MIUINewHome" "MIUIYoupin" "MIUIHuanJi" "MIUIMiDrive" "MIUIVirtualSim" "ThirdAppAssistant" "XMRemoteController" "MIUIVipAccount" "MiuiScanner" "Xinre" "SmartHome" "MiShop" "MiRadio" "MIUICompass" "MediaEditor" "BaiduIME" "iflytek.inputmethod" "MIService" "MIUIEmail" "MIUIVideo" "MIUIMusicT")
+# 精简部分应用1
+echo -e "${Red}- 精简部分应用1"
+apps=("AiAsstVision" "AnalyticsCore" "CarWith" "CatchLog" "com.xiaomi.macro" "com.xiaomi.ugd" "GoogleLocationHistory" "HybridPlatform" "mi_connect_service"  "MiBugReport"  "MiLinkOS1ForHM" "MIS" "MIUIAiasstService" "MIUIgreenguard" "MIUIReporter" "OtaProvision" "OTrPBroker" "PaymentService" "remoteSimLockAuthentication" "remotesimlockservice" "RideModeAudio" "SwitchAccess" "system"  "talkback"  "Updater" "UPTsmService""VoiceAssistAndroidT" "VoiceTrigger" "WMService" "XiaoaiEdgeEngine" "XiaoaiRecommendation")
+for app in "${apps[@]}"; do
+  appsui=$(sudo find "$GITHUB_WORKSPACE"/images/product/app/ -type d -iname "*${app}*")
+  if [[ -n $appsui ]]; then
+    echo -e "${Yellow}- 找到精简目录: $appsui"
+    sudo rm -rf "$appsui"
+  fi
+done
+# 精简部分应用2
+echo -e "${Red}- 精简部分应用2"
+apps=("Health" "MIUIXiaoAiSpeechEngine" "MIGalleryLockscreen" "MIpay" "MIUIDriveMode" "MIUIDuokanReader" "MIUIGameCenter" "MIUINewHome" "MIUIYoupin" "MIUIHuanJi" "MIUIMiDrive" "MIUIVirtualSim" "ThirdAppAssistant" "XMRemoteController" "MIUIVipAccount" "MiuiScanner" "Xinre" "SmartHome" "MiShop" "MiRadio" "MIUICompass" "BaiduIME" "iflytek.inputmethod" "MIUIEmail" "MIUIVideo" "MIUIMusicT" "Health" "MIService")
 for app in "${apps[@]}"; do
   appsui=$(sudo find "$GITHUB_WORKSPACE"/images/product/data-app/ -type d -iname "*${app}*")
+  if [[ -n $appsui ]]; then
+    echo -e "${Yellow}- 找到精简目录: $appsui"
+    sudo rm -rf "$appsui"
+  fi
+done
+# 精简部分应用3
+echo -e "${Red}- 精简部分应用3"
+apps=("SystemHelper")
+for app in "${apps[@]}"; do
+  appsui=$(sudo find "$GITHUB_WORKSPACE"/images/product/pangu/system/priv-app/ -type d -iname "*${app}*")
+  if [[ -n $appsui ]]; then
+    echo -e "${Yellow}- 找到精简目录: $appsui"
+    sudo rm -rf "$appsui"
+  fi
+done
+# 精简部分应用4
+echo -e "${Red}- 精简部分应用4"
+apps=("AutoRegistration" "ConfigUpdater" "MiGameCenterSDKService" "MIShare" "MIUIBarrageV2" "MIUIMirror" "RegService")
+for app in "${apps[@]}"; do
+  appsui=$(sudo find "$GITHUB_WORKSPACE"/images/product/priv-app/ -type d -iname "*${app}*")
+  if [[ -n $appsui ]]; then
+    echo -e "${Yellow}- 找到精简目录: $appsui"
+    sudo rm -rf "$appsui"
+  fi
+done
+# 精简部分应用5
+echo -e "${Red}- 精简部分应用5"
+apps=("BuiltInPrintService" "CallLogBackup" "CellBroadcastLegacyApp" "CellBroadcastServiceModulePlatform" "MusicFX" "Tag" "UserDictionaryProvider")
+for app in "${apps[@]}"; do
+  appsui=$(sudo find "$GITHUB_WORKSPACE"/images/system/system/priv-app/ -type d -iname "*${app}*")
   if [[ -n $appsui ]]; then
     echo -e "${Yellow}- 找到精简目录: $appsui"
     sudo rm -rf "$appsui"
@@ -380,7 +420,7 @@ echo -e "${Red}- 定制 ROM 包名"
 md5=$(md5sum "$GITHUB_WORKSPACE"/zip/miui_${device}_${port_os_version}.zip)
 echo "MD5=${md5:0:32}" >>$GITHUB_ENV
 zip_md5=${md5:0:10}
-rom_name="miui_HOUJI_${port_os_version}_${zip_md5}_${android_version}.0_smice.zip"
+rom_name="ULTRA_HOUJI_${port_os_version}_${zip_md5}_${android_version}.0.zip"
 sudo mv "$GITHUB_WORKSPACE"/zip/miui_${device}_${port_os_version}.zip "$GITHUB_WORKSPACE"/zip/"${rom_name}"
 echo "rom_name=$rom_name" >>$GITHUB_ENV
 ### 输出卡刷包结束
